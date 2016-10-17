@@ -1,0 +1,36 @@
+create table UserDetails1(UserID int identity(1,1) primary key,UserName varchar(50),Password varchar(50),RoleName varchar(30))
+
+	CREATE PROCEDURE Validate_User
+		  @Username NVARCHAR(50),
+		  @Password NVARCHAR(50)
+	AS
+	BEGIN
+		  SET NOCOUNT ON;
+		  DECLARE @UserID INT,  @RoleName varchar(50) 
+     
+		  SELECT @UserID = UserID, @RoleName= RoleName
+		  FROM UserDetails1 WHERE UserName = @Username AND [Password] = @Password
+     
+    
+		  BEGIN
+				  IF @UserID IS NOT NULL
+				BEGIN
+                 
+					  SELECT UserID,RoleName [Roles] from UserDetails1 where @UserID=UserID
+				END
+				ELSE
+				BEGIN
+					  SELECT -2 [UserId], '' [Roles]
+				END
+		  END
+     
+	END
+
+insert into UserDetails1 values('Executive','123456','executive');
+
+insert into UserDetails1 values('Cashier','123456','cashier');
+
+
+SELECT UserID,RoleName from UserDetails1 where @UserID=UserID
+
+exec Validate_User 'Executive','123456'
