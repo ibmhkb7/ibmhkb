@@ -1,0 +1,38 @@
+	CREATE TABLE hanu(UserID int identity(1,1) primary key,Username VARCHAR(30),Password VARCHAR(30),RoleName varchar(30));
+	
+	insert into hanu values('hanu','hanu','chashier');	
+
+	select * from hanu;
+
+	CREATE PROCEDURE Validate_User
+      @Username NVARCHAR(20),
+      @Password NVARCHAR(20)
+     AS
+     BEGIN
+      SET NOCOUNT ON;
+      DECLARE @UserId INT, @RoleName varchar(30)
+     
+      SELECT @UserId = UserId,  @RoleName = @RoleName
+      FROM hanu WHERE Username = @Username AND [Password] = @Password
+     
+      IF @UserId IS NOT NULL
+      BEGIN
+           SELECT RoleName FROM hanu
+           WHERE RoleName = @RoleName
+      END
+            ELSE
+       BEGIN
+                  SELECT -2 
+       END
+
+END
+
+"Data Source=ingnrilpsql01;Initial Catalog=AHD16_AMS89_Group7;User id=a37;Password=a37";
+
+
+ public int DeactiveCustomer(long id)
+            {
+                CustomerDAL status = new CustomerDAL();
+                int n=status.DeactiveCustomer(id);
+             return n;
+            }ss
