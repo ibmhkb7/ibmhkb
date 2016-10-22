@@ -1,0 +1,45 @@
+ 
+//Account Table Creatation 
+
+create table AccountDetails(AccountId bigint primary key identity(100,1),Customer_SSN_ID bigint,AccountType varchar(30),Status varchar(30),Balanace Decimal,LastUpdate date, foreign key (Customer_SSN_ID) references  CustomerCreation(Customer_SSN_ID))
+
+//select Selection
+select * from  AccountDetails
+
+
+
+insert into AccountDetails values(100000001,'Saving','Active',10000.90,'2015-5-5')
+
+	  create proc InsertAccount(
+	    @AccountId bigint out,
+	    @CustomerID bigint,
+	    @AccountType varchar(30),
+	    @Status varchar(30),
+	    @Bal decimal,
+	    @LastUpdate date)
+	    as
+	    	begin
+
+	   	 insert into AccountDetails values(@CustomerID, @AccountType, @Status, @Bal, @LastUpdate)
+	  	 set @AccountId=@@IDENTITY
+	  	 end
+
+	  	 drop procedure  InsertAccount
+
+	   
+	   exec InsertAccount 0,100000002,'Saving','Active',10000.90,'2015-5-5'
+
+	   select * from Login
+
+//Transfored Table Creataaion
+create table transfer123(TransferId bigint identity(100,1) primary key, SourceAccount bigint foreign key references AccountDetails(AccountId), TargetAccount bigint foreign key references AccountDetails(AccountId),TransitionType varchar(30),updated date,TransferAmount int,comments varchar(40))
+
+/select table
+select *from transfer123
+insert into transfer123 values('savings',12-3-1995,20,'active')
+	 
+	 create proc view_transferamount
+	 as
+	 begin
+	 select *from transfer123
+	 end
